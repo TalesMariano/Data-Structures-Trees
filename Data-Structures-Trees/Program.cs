@@ -14,11 +14,17 @@ namespace Data_Structures_Trees
 
             Console.WriteLine("Hello World");
 
-            Print(tree.name);
-            Print(tree.root.data);
+            Print(tree.Name);
+            Print(tree.Root.Data);
+
+            tree.Search(2);
+
+
             Console.ReadLine();
         }
 
+
+        #region HelperMethodsRegion
         static void Print(string value)
         {
             Console.WriteLine(value);
@@ -28,29 +34,55 @@ namespace Data_Structures_Trees
         {
             Console.WriteLine(value);
         }
+        #endregion
     }
 
     public class Node
     {
-        public int data;
-        public Node left;
-        public Node right;
+        public int Data { get; set; }
+        public Node Left { get; set; }
+        public Node Right { get; set; }
 
-        public Node(int _data)
+        public Node(int data)
         {
-            data = _data;
+            Data = data;
+            Left = null;
+            Right = null;
+        }
+
+        public Node Search(int target)
+        {
+            if(target == Data)
+            {
+                Console.WriteLine("Found it!");
+                return this;
+            }
+
+            if (Left != null && Data > target)
+                return Left.Search(target);
+
+            if (Right != null && Data < target)
+                return Right.Search(target);
+
+            Console.WriteLine("Value not in the tree");
+            return null;
         }
     }
 
     public class Tree
     {
-        public Node root;
-        public string name;
+        public Node Root { get; set; }
+        public string Name { get; set; }
 
-        public Tree(Node _root, string _name)
+        public Tree(Node root, string name = "")
         {
-            root = _root;
-            name = _name;
+            Root = root;
+            Name = name;
+        }
+
+        public Node Search(int target)
+        {
+            return Root.Search(target);
         }
     }
 }
